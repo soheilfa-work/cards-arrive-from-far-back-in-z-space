@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Pricedown";
+  src: url("/fonts/Pricedown%20Bl.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ink: #2a1038;
+  --gold: #ffe14a;
+  --cream: #fff4e8;
+  --magenta: #d23b86;
+  --orange: #ff8a3d;
+  --violet: #6a46d8;
+  --font-display: "Pricedown", "Arial Narrow", sans-serif;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background: #ffb07a;
+  color: var(--cream);
+}
+
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: var(--font-figtree), "Figtree", "Segoe UI", sans-serif;
+}
+
+.slider {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #ffb07a url("/background.jpg") center / cover no-repeat;
+  perspective: 1400px;
+  perspective-origin: 50% 42%;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(42, 16, 56, 0.28),
+      rgba(255, 138, 61, 0.08) 42%,
+      rgba(42, 16, 56, 0.34)
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      rgba(42, 16, 56, 0.28) 100%
+    );
+  pointer-events: none;
+}
+
+.stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.stage.is-moving .slide,
+.stage.is-moving .slide-media {
+  will-change: transform;
+}
+
+.scroll-track {
+  width: 100%;
+  pointer-events: none;
+}
+
+.slide {
+  grid-area: 1 / 1;
+  width: min(32vw, 360px);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #3a2158;
+  box-shadow: 0 18px 36px rgba(42, 16, 56, 0.35);
+  backface-visibility: hidden;
+  transform: translate3d(0px, 0px, -2000px) scale(0.4);
+}
+
+.slide:first-child {
+  z-index: 3;
+  transform: translate3d(0px, 0px, 0px) scale(1);
+}
+
+.slide-wide {
+  width: min(70vw, 820px);
+  aspect-ratio: 16 / 9;
+}
+
+.slide-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slide-thanks {
+  width: min(88vw, 1040px);
+  height: auto;
+  aspect-ratio: auto;
+  overflow: visible;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.slide-thanks .slide-media {
+  height: auto;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(4.2rem, 10vw, 8.5rem);
+  line-height: 0.84;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--gold);
+  -webkit-text-stroke: 10px var(--ink);
+  paint-order: stroke fill;
+  text-shadow:
+    0 8px 0 var(--magenta),
+    0 16px 0 rgba(255, 138, 61, 0.85),
+    0 28px 40px rgba(42, 16, 56, 0.45);
+}
+
+.slide-thanks p {
+  max-width: 16ch;
+  margin: 0 auto;
+}
+
+.slide-thanks span {
+  display: block;
+  margin-top: 0.12em;
+  font-size: 0.62em;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+}
+
+.slider-bar {
+  position: absolute;
+  right: 0;
+  bottom: 6vh;
+  left: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 0 8vw;
+  pointer-events: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-shadow:
+    0 2px 0 var(--ink),
+    0 8px 18px rgba(42, 16, 56, 0.45);
+  user-select: none;
+}
+
+@media (max-width: 900px) {
+  .slide {
+    width: min(58vw, 360px);
+  }
+
+  .slide-wide {
+    width: min(90vw, 820px);
+  }
+
+  .slider-bar {
+    bottom: 4vh;
+    padding: 0 6vw;
+    font-size: 22px;
+  }
+
+  .slide-thanks .slide-media {
+    -webkit-text-stroke-width: 6px;
+    font-size: clamp(3.2rem, 16vw, 5.5rem);
+  }
+}
